@@ -1,0 +1,2 @@
+def AI(Player):
+    pass
