@@ -10,9 +10,9 @@ class WWS:
     def start(self):
         print("Starting Game")
         while self.endGame != False:
-            self.human1.displayRoundGame() # Display game board
-            self.human1.shoot() # Shoot then display update game board
-            self.ai1.shoot() # Same
+            self.human1.displayRoundGame() # Display game board not impemented
+            self.human1.shoot() # Shoot then display update game board not impemented
+            self.ai1.shoot() # Same not impemented
             self.updateEndGame(self) # Check if players have 0 ships and in this case turn endGame to true and stop the game
 
     def updateEndGame(self):
