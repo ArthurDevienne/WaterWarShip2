@@ -2,7 +2,7 @@ from Box import *
 from Ship import *
 import numpy as np
 class Player():
-    def __self__(self):
+    def __init__(self):
         self.board = np.full((10,10), Box.VIDE)
         self.porteAvion = Ship(5) # Constructor will ask himself for board position
         self.destroyer1 = Ship(2)
