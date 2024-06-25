@@ -7,4 +7,5 @@ class Human(Player):
 
     def displayRoundGame():
         # display 2 board : place where we fire (enemy board without ship) and our board
-        super().board
+        super().board # display current player Board
+        super().displayFireBoard()

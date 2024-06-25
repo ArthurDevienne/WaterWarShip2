@@ -44,3 +44,10 @@ class Ship:
         print("Ship Coordinates:")
         for i in range(self.boxSize):
             print(f"({self.shipPositionX[i]}, {self.shipPositionY[i]})")
+
+    def isShipDestroy(self):
+        for i in range(1, len(self.boxSize)):
+            if self.shipState == False:
+                return False
+        return True
+    
