@@ -150,12 +150,10 @@ class AI(Player):
         plt.show()
 
     def update_heatmaps(self):
-        # Toujours afficher la heatmap
-        print("Updating heatmaps...")
-        hit_heatmap, ship_position_heatmap = self.analyze_game_data()
-        self.hit_heatmap = hit_heatmap
-        self.ship_position_heatmap = ship_position_heatmap
-        print("Heatmaps updated.")
+        if self._has_enough_data():
+            hit_heatmap, ship_position_heatmap = self.analyze_game_data()
+            self.hit_heatmap = hit_heatmap
+            self.ship_position_heatmap = ship_position_heatmap
 
     def get_surrounding_positions(self, x, y):
         positions = []
