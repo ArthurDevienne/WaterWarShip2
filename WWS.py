@@ -41,15 +41,25 @@ class WWS:
 
     def start(self):
         print("Starting Game")
-        for game_num in range(self.num_games):
-            print(f"Starting Game {game_num + 1}")
-            self.game_id = self._get_next_game_id()  # Update game_id for each new game
+        if isinstance(self.player1, AI.AI):
             self.player1.update_probabilities()  # Update probabilities before each game
+        if isinstance(self.player2, AI.AI):
             self.player2.update_probabilities()  # Update probabilities before each game
+
+        if isinstance(self.player1, AI.AI) and isinstance(self.player2, AI.AI):
+            for game_num in range(self.num_games):
+                print(f"Starting Game {game_num + 1}")
+                self.game_id = self._get_next_game_id()  # Update game_id for each new game
+                self.player1.reset_fire_history()
+                self.player2.reset_fire_history()
+                self.play_game()
+                self.save_game_data()  # Save data after each game
+        else:
+            self.game_id = self._get_next_game_id()
             self.player1.reset_fire_history()
             self.player2.reset_fire_history()
             self.play_game()
-            self.save_game_data()  # Save data after each game
+            self.save_game_data()
 
     def play_game(self):
         self.player1.reset()
