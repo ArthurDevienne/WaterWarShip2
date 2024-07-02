@@ -1,7 +1,7 @@
 import pandas as pd
 import Human
 import AI
-from utils import convert_board_to_ints, plot_heatmap  # Importer les fonctions utilitaires
+from utils import convert_board_to_ints, convert_board_to_ints_ship  # Importer les fonctions utilitaires
 
 class WWS:
     def __init__(self):
@@ -41,45 +41,34 @@ class WWS:
 
     def start(self):
         print("Starting Game")
-        if isinstance(self.player1, AI.AI) and isinstance(self.player2, AI.AI):
-            for game_num in range(self.num_games):
-                print(f"Starting Game {game_num + 1}")
-                self.game_id = self._get_next_game_id()  # Update game_id for each new game
-                self.player1.update_heatmaps()  # Update heatmaps before each game
-                self.player2.update_heatmaps()  # Update heatmaps before each game
-                self.player1.reset_fire_history()
-                self.player2.reset_fire_history()
-                self.play_game()
-                self.save_game_data()  # Save data after each game
-        else:
-            self.game_id = self._get_next_game_id()
-            if isinstance(self.player1, AI.AI):
-                self.player1.update_heatmaps()  # Update heatmaps before the game
-            if isinstance(self.player2, AI.AI):
-                self.player2.update_heatmaps()  # Update heatmaps before the game
+        for game_num in range(self.num_games):
+            print(f"Starting Game {game_num + 1}")
+            self.game_id = self._get_next_game_id()  # Update game_id for each new game
+            self.player1.update_probabilities()  # Update probabilities before each game
+            self.player2.update_probabilities()  # Update probabilities before each game
             self.player1.reset_fire_history()
             self.player2.reset_fire_history()
             self.play_game()
-            self.save_game_data()  # Save data after the game
+            self.save_game_data()  # Save data after each game
 
     def play_game(self):
         self.player1.reset()
         if isinstance(self.player1, AI.AI):
-            if self._has_enough_data():
-                self.player1.create_ships_with_heatmap()  # Use heatmap-based ship placement
+            if self.player1._has_enough_data():
+                self.player1.create_ships_with_probabilities()  # Use probability-based ship placement
             else:
                 self.player1.create_ships()  # Use random placement
         else:
-            self.player1.create_ships()  # Use default ship placement
+            self.player1.create_ships()  # Use random placement
 
         self.player2.reset()
         if isinstance(self.player2, AI.AI):
-            if self._has_enough_data():
-                self.player2.create_ships_with_heatmap()  # Use heatmap-based ship placement
+            if self.player2._has_enough_data():
+                self.player2.create_ships_with_probabilities()  # Use probability-based ship placement
             else:
                 self.player2.create_ships()  # Use random placement
         else:
-            self.player2.create_ships()  # Use default ship placement
+            self.player2.create_ships()  # Use random placement
 
         self.endGame = False  # Reset end game flag for each game
         self.game_data = []  # Reset game data for each game
@@ -147,7 +136,7 @@ class WWS:
         for player, name in [(self.player1, 'player1'), (self.player2, 'player2')]:
             board_data['game_id'].append(self.game_id)
             board_data['player'].append(name)
-            board_data['board'].append(convert_board_to_ints(player.board))
+            board_data['board'].append(convert_board_to_ints_ship(player.board))
 
             board_data['game_id'].append(self.game_id)
             board_data['player'].append(f'{name}_fire')
@@ -161,6 +150,7 @@ class WWS:
             pass
         df.to_csv('boards_data.csv', index=False)
         print("Board data saved to boards_data.csv")
+
 
     def _has_enough_data(self):
         try:

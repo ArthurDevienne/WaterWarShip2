@@ -32,12 +32,15 @@ class Player:
         if state == 1:
             print(f"You touched a ship at the point: {pointX + 1}, {pointY + 1}")  # Convert back to 1-based for display
             self.fireBoard[pointY][pointX] = Box.TOUCHE
+            return "TOUCHE"
         elif state == 2:
             print("You destroyed the ship")
             self.update_sunk_ship(enemy, pointX, pointY)
+            return "COULE"
         else:
             print("You shot in the water")
             self.fireBoard[pointY][pointX] = Box.EAU
+            return "RATE"
 
     def update_sunk_ship(self, enemy, pointX, pointY):
         for ship in enemy.ships:
