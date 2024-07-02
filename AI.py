@@ -70,7 +70,7 @@ class AI(Player):
     def place_ship_on_board(self, ship):
         for i in range(ship.getSize()):
             x, y = ship.shipPositionX[i], ship.shipPositionY[i]
-            self.board[y-1][x-1] = Box.TOUCHE  # Convert 1-based to 0-based index
+            self.board[y-1][x-1] = Box.TOUCHE
 
     def displayRoundGame(self):
         self.displayBoard()
@@ -122,7 +122,7 @@ class AI(Player):
 
     @staticmethod
     def analyze_game_data():
-        print("Analyzing game data...")  # Debugging statement
+        print("Analyzing game data...")
         try:
             game_data = pd.read_csv('game_data.csv')
             boards_data = pd.read_csv('boards_data.csv')
@@ -144,20 +144,20 @@ class AI(Player):
         print(boards_data.head())
 
         for _, board in boards_data.iterrows():
-            if '_fire' not in board['player']:  # We only want the actual boards, not the fire boards
+            if '_fire' not in board['player']:
                 board_array = np.array(eval(board['board']))
                 ship_positions += board_array
 
-        print("Hit Probabilities before normalization:\n", hit_probabilities)  # Debugging statement
-        print("Ship Positions before normalization:\n", ship_positions)  # Debugging statement
+        print("Hit Probabilities before normalization:\n", hit_probabilities)
+        print("Ship Positions before normalization:\n", ship_positions)
 
         if hit_probabilities.sum() > 0:
             hit_probabilities /= hit_probabilities.sum()  # Normalize to get probabilities
         if ship_positions.sum() > 0:
             ship_positions /= ship_positions.sum()  # Normalize to get probabilities
 
-        print("Hit Probabilities after normalization:\n", hit_probabilities)  # Debugging statement
-        print("Ship Positions after normalization:\n", ship_positions)  # Debugging statement
+        print("Hit Probabilities after normalization:\n", hit_probabilities)
+        print("Ship Positions after normalization:\n", ship_positions)
 
         AI.plot_probabilities(hit_probabilities, 'Hit Probabilities')
         AI.plot_probabilities(ship_positions, 'Ship Position Probabilities')
@@ -166,7 +166,7 @@ class AI(Player):
 
     @staticmethod
     def plot_probabilities(data, title):
-        print(f"Plotting probabilities: {title}")  # Debugging statement
+        print(f"Plotting probabilities: {title}")
         fig, ax = plt.subplots()
         cax = ax.matshow(data, cmap='coolwarm')
         fig.colorbar(cax)
@@ -174,7 +174,7 @@ class AI(Player):
         plt.show()
 
     def update_probabilities(self):
-        print("Updating probabilities...")  # Debugging statement
+        print("Updating probabilities...")
         if self._has_enough_data():
             hit_probabilities, ship_position_probabilities = self.analyze_game_data()
             self.hit_probabilities = hit_probabilities

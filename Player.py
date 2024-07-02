@@ -20,7 +20,7 @@ class Player:
         for i in range(ship.getSize()):
             x, y = ship.shipPositionX[i], ship.shipPositionY[i]
             if 0 <= x-1 < 10 and 0 <= y-1 < 10:  # Verify position is within bounds
-                self.board[y-1][x-1] = Box.TOUCHE  # Convert 1-based to 0-based index
+                self.board[y-1][x-1] = Box.TOUCHE
 
     def fire(self, enemy, pointX, pointY):
         if (pointX, pointY) in self.fireList:
@@ -30,7 +30,7 @@ class Player:
         self.fireList.add((pointX, pointY))
         state = enemy.isTouched(self, pointX, pointY)
         if state == 1:
-            print(f"You touched a ship at the point: {pointX + 1}, {pointY + 1}")  # Convert back to 1-based for display
+            print(f"You touched a ship at the point: {pointX + 1}, {pointY + 1}")
             self.fireBoard[pointY][pointX] = Box.TOUCHE
             return "TOUCHE"
         elif state == 2:
@@ -47,7 +47,7 @@ class Player:
             if ship.isShipDestroy():
                 for i in range(ship.getSize()):
                     x, y = ship.shipPositionX[i], ship.shipPositionY[i]
-                    self.fireBoard[y-1][x-1] = Box.COULE  # Convert 1-based to 0-based index
+                    self.fireBoard[y-1][x-1] = Box.COULE
 
     def isTouched(self, player, pointX, pointY):
         for ship in self.ships:
@@ -159,7 +159,7 @@ class Player:
         print()
 
     def create_ships(self):
-        ship_sizes = [5, 4, 3, 3, 2]  # Example ship sizes
+        ship_sizes = [5, 4, 3, 3, 2]
         for size in ship_sizes:
             while True:
                 x = np.random.randint(1, 11)

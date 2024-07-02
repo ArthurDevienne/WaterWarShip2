@@ -6,11 +6,11 @@ class Human(Player):
     def __init__(self, name):
         super().__init__()
         self.name = name
-        self.fire_history = set()  # Ajout de l'attribut fire_history
+        self.fire_history = set()
 
     def create_ships(self):
         self.reset()
-        ship_sizes = [5, 4, 3, 3, 2]  # Example ship sizes
+        ship_sizes = [5, 4, 3, 3, 2]
         for size in ship_sizes:
             x, y = self._chooseFirstCoord(size)
             orientation = self._choose_orientation(x, y, size)

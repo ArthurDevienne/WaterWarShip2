@@ -1,7 +1,7 @@
 import pandas as pd
 import Human
 import AI
-from utils import convert_board_to_ints, convert_board_to_ints_ship  # Importer les fonctions utilitaires
+from utils import convert_board_to_ints, convert_board_to_ints_ship
 
 class WWS:
     def __init__(self):

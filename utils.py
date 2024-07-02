@@ -1,5 +1,4 @@
 import numpy as np
-import matplotlib.pyplot as plt
 from Box import Box
 
 def convert_board_to_ints(board):
